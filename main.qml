@@ -109,20 +109,82 @@ ApplicationWindow {
         id: content
         color: "#2e3e4e"
         width: parent.width - 240
-        height: parent.height-50
+        height: parent.height - 50
         anchors.left: sidebar.right
-        anchors.top: parent.top-50
+        anchors.top: parent.top - 50
         anchors.bottom: parent.bottom
 
-        // Content area, where different pages can be loaded using a Loader
-        Text {
-            id: contentText
-            anchors.centerIn: parent
-            font.pixelSize: 20
-            color: "white"
-            text: "Room 1 content"
+        Column {
+            anchors.fill: parent
+
+            ListView {
+                id: messageList
+                anchors.fill: parent
+                height: parent.height - 100 // 为输入区和按钮留出空间
+                model: messageModel // 需要在适当的地方定义这个模型
+                delegate: Text {
+                    text: model.message
+                    color: "white"
+                    font.pixelSize: 16
+                }
+            }
+
+            Rectangle {
+                color: "#354759"
+                height: 50
+                width: parent.width - 250 // 留出按钮空间
+                anchors.bottom: parent.bottom
+                TextField {
+                    id: inputField
+                    anchors.fill: parent
+                    placeholderText: qsTr("Type your message here...")
+                }
+            }
+
+            Row {
+                spacing: 10
+                height: 50
+                width: 250 // 给按钮足够空间
+                anchors.right: parent.right // 与输入框右侧对齐
+                anchors.bottom: parent.bottom
+
+                Button {
+                    text: "Send"
+                    onClicked: {
+                        // 发送按键逻辑
+                    }
+                }
+
+                Button {
+                    text: "File"
+                    onClicked: {
+                        // 处理文件按钮点击的逻辑
+                    }
+                }
+
+                Button {
+                    text: "Audio"
+                    onClicked: {
+                        // 处理音频按钮点击的逻辑
+                    }
+                }
+            }
+        }
+
+        ListView {
+            width: 100
+            height: parent.height
+            anchors.right: parent.right
+            model: userListModel // 需要在适当的地方定义这个模型
+            delegate: Text {
+                text: model.userName
+                color: "white"
+                font.pixelSize: 16
+            }
         }
     }
+
+
 
 
     //popup window
@@ -232,4 +294,19 @@ ApplicationWindow {
                 }
             }
         }
+
+        ListModel {
+            id: messageModel
+            ListElement { message: "Hello, welcome to the chat!" }
+            ListElement { message: "This is a test message." }
+            // 可以继续添加更多消息
+        }
+        ListModel {
+            id: userListModel
+            ListElement { userName: "User1" }
+            ListElement { userName: "User2" }
+            // 可以继续添加更多用户
+        }
+
 }
+
