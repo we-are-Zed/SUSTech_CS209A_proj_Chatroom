@@ -92,6 +92,8 @@ ApplicationWindow {
                             text: model.text
                             onClicked: {
                                 console.log(model.text + " button clicked")
+                                clearAllData()
+                                updateDataFromLists(testMessages1)
                             }
                         }
                     }
@@ -350,6 +352,41 @@ ApplicationWindow {
                 IP: user.IP});
 
             }
+
+            function clearAllData() {
+                messageModel.clear();
+                userListModel.clear();
+            }
+
+            function updateDataFromLists(messageList) {
+
+
+                // 遍历 messageList，每个元素是一个 QVariant 包装的 Message 对象
+                messageList.forEach(function(message) {
+                    messageModel.append({
+                        userName: message.userName,
+                        timestamp: message.timestamp,
+                        text: message.text
+                    });
+                });
+
+                // 遍历 userList，每个元素是一个 QVariant 包装的 User 对象
+               // userList.forEach(function(user) {
+                 //   userListModel.append({
+                   //     userName: user.userName,
+
+                    //});
+                //});
+            }
+
+            var testMessages1 = [
+                {userName: "Alice", timestamp: "2024-06-01 08:30:00", text: "Good morning!"},
+                {userName: "Bob", timestamp: "2024-06-01 08:35:00", text: "Hello Alice, how are you today?"}
+            ];
+
+
+
+
 
 
 }
