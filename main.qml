@@ -13,17 +13,17 @@ ApplicationWindow {
     Rectangle {
             width: parent.width // 宽度和窗口宽度相同
             height: 50 // 设置条的高度
-            color: "steelblue" // 设置条的颜色
+            color: "#498C8B" // 设置条的颜色
             anchors.top: parent.top // 放置在窗口顶部
             Row {
                         anchors.fill: parent
 
                         Rectangle {
-                            border.color: "black" // 左侧rectangle边框颜色
+                            border.color: "#498C8B" // 左侧rectangle边框颜色
                             border.width: 3 // 左侧rectangle边框宽度
                             width: parent.width / 7 // 左侧rectangle宽度为bar的1/7
                             height: parent.height
-                            color: "lightsteelblue"
+                            color: "#E2F5EA"
 
                             MouseArea {
                                 anchors.fill: parent
@@ -40,11 +40,11 @@ ApplicationWindow {
                         }
 
                         Rectangle {
-                            border.color: "black" // 左侧rectangle边框颜色
+                            border.color: "#498C8B" // 左侧rectangle边框颜色
                             border.width: 3 // 左侧rectangle边框宽度
                             width: parent.width  / 7
                             height: parent.height
-                            color: "lightsteelblue"
+                            color: "#E2F5EA"
                             MouseArea {
                                 anchors.fill: parent
                                 onClicked: {
@@ -63,7 +63,7 @@ ApplicationWindow {
         }
     Rectangle {
         id: sidebar
-        color: "#293846"
+        color: "#3D5F69"
         width: 240
         height: parent.height - 50
         anchors.top: parent.top - 50
@@ -86,7 +86,7 @@ ApplicationWindow {
                     Rectangle {
                         width: parent.width
                         height: parent.height
-                        color: ListView.isCurrentItem ? "#354759" : "#293846"
+                        color: ListView.isCurrentItem ? "#A4E5D9" : "#3D5F69"
                         Text {
                             text: model.text
                             anchors.centerIn: parent
@@ -123,11 +123,32 @@ ApplicationWindow {
                 anchors.fill: parent
                 height: parent.height - 100 // 为输入区和按钮留出空间
                 model: messageModel // 需要在适当的地方定义这个模型
-                delegate: Text {
-                    text: model.message
-                    color: "white"
-                    font.pixelSize: 16
-                }
+                delegate: Rectangle {
+                        width: parent.width-100
+                        height: 70
+                        color: "#f0f0f0"
+                        border.color: "#e0e0e0"
+                        border.width: 1
+
+                        Column {
+                            anchors.fill: parent
+                            Text {
+                                text: "Time: " + model.timestamp.toLocaleString(Qt.locale(), "yyyy-MM-dd hh:mm:ss")
+                                color: "grey"
+                            }
+
+                            Text {
+                                text: "User: " + model.userName
+                                color: "black"
+                                font.bold: true
+                            }
+
+                            Text {
+                                text: "Message: " + model.text
+                                color: "blue"
+                            }
+                        }
+                    }
             }
 
             Rectangle {
@@ -177,11 +198,21 @@ ApplicationWindow {
             height: parent.height
             anchors.right: parent.right
             model: userListModel // 需要在适当的地方定义这个模型
-            delegate: Text {
-                text: model.userName
-                color: "white"
-                font.pixelSize: 16
-            }
+            delegate: Rectangle {
+                    width: parent.width
+                    height: 50
+                    color: "#649DAD"
+                    border.color: "#649DAD"
+                    border.width: 1
+
+                    Row {
+                        anchors.fill: parent
+                        Text {
+                            text: "User: " + model.userName
+                            color: "black"
+                        }
+                    }
+                }
         }
     }
 
@@ -304,10 +335,11 @@ ApplicationWindow {
 
         ListModel {
             id: messageModel
-            ListElement { message: "Hello, welcome to the chat!" }
-            ListElement { message: "This is a test message." }
+            ListElement { userName: "Alice"; timestamp: "2021-01-01 10:00:00"; text: "Hello, welcome to the chat!" }
+            ListElement { userName: "Bob"; timestamp: "2021-01-01 10:05:00"; text: "This is a test message." }
             // 可以继续添加更多消息
         }
+
         ListModel {
             id: userListModel
             ListElement { userName: "User1" }
@@ -318,19 +350,24 @@ ApplicationWindow {
             target: Server
             //server应该有一个signal为chatRoomListChanged（string roomName）,传入参数为新房间的名字
             //当chatroom列表发生变化时，会向qml发送chatRoomListChanged信号，当qml收到信号时，会做出如下的变化（在sidebar的list append新的list element）
-            OnChatRoomListChanged: {
-                chatRoomList.append(roomName);
-            }
+            //OnChatRoomListChanged: {
+              //chatRoomList.append(roomName);
+            //}
         }
         function onNewMessageReceived(message) {
-                messageModel.append({"message": message});
-            }
+            messageModel.append({
+                userName: message.userName,
+                timestamp: message.timestamp,
+                text: message.text
+            });
+        }
 
-            function onUserListUpdated(users) {
-                userListModel.clear();
-                users.forEach(function(user) {
-                    userListModel.append({"userName": user});
-                });
+            function onUserListUpdated(user) {
+
+                    userListModel.append({
+                userName: user.userName,
+                IP: user.IP});
+
             }
 
 
