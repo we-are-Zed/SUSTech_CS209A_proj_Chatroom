@@ -82,21 +82,16 @@ ApplicationWindow {
 
                 delegate: Item {
                     width: parent.width
-                    height: 40
-                    Rectangle {
-                        width: parent.width
-                        height: parent.height
-                        color: ListView.isCurrentItem ? "#A4E5D9" : "#3D5F69"
-                        Text {
+                    height: 50
+
+                    Row {
+                        anchors.fill: parent
+                        spacing: 10
+
+                        Button {
                             text: model.text
-                            anchors.centerIn: parent
-                            color: ListView.isCurrentItem ? "white" : "black"
-                        }
-                        MouseArea {
-                            anchors.fill: parent
                             onClicked: {
-                                sidebarlist.currentIndex = index
-                                contentText.text = model.text + " content"
+                                console.log(model.text + " button clicked")
                             }
                         }
                     }
@@ -154,7 +149,7 @@ ApplicationWindow {
             Rectangle {
                 color: "#354759"
                 height: 50
-                width: parent.width - 150 // 留出按钮空间
+                width: parent.width - 250 // 留出按钮空间
                 anchors.bottom: parent.bottom
                 TextField {
                     id: inputField
@@ -355,5 +350,6 @@ ApplicationWindow {
                 IP: user.IP});
 
             }
+
 
 }
