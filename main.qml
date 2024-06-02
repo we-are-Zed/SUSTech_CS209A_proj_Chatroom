@@ -314,4 +314,16 @@ ApplicationWindow {
             // 可以继续添加更多用户
         }
 
+        function onNewMessageReceived(message) {
+                messageModel.append({"message": message});
+            }
+
+            function onUserListUpdated(users) {
+                userListModel.clear();
+                users.forEach(function(user) {
+                    userListModel.append({"userName": user});
+                });
+            }
+
+
 }
