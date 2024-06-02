@@ -73,6 +73,7 @@ ApplicationWindow {
                 width: 240
                 height: parent.height
                 model: ListModel {
+                    id: chatRoomList
                     ListElement { text: "Room 1" }
                     ListElement { text: "Room 2" }
                     ListElement { text: "Room 3" }
@@ -313,7 +314,14 @@ ApplicationWindow {
             ListElement { userName: "User2" }
             // 可以继续添加更多用户
         }
-
+        Connections {
+            target: Server
+            //server应该有一个signal为chatRoomListChanged（string roomName）,传入参数为新房间的名字
+            //当chatroom列表发生变化时，会向qml发送chatRoomListChanged信号，当qml收到信号时，会做出如下的变化（在sidebar的list append新的list element）
+            OnChatRoomListChanged: {
+                chatRoomList.append(roomName);
+            }
+        }
         function onNewMessageReceived(message) {
                 messageModel.append({"message": message});
             }
