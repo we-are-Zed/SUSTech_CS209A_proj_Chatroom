@@ -154,7 +154,7 @@ ApplicationWindow {
             Rectangle {
                 color: "#354759"
                 height: 50
-                width: parent.width - 250 // 留出按钮空间
+                width: parent.width - 150 // 留出按钮空间
                 anchors.bottom: parent.bottom
                 TextField {
                     id: inputField
@@ -174,20 +174,6 @@ ApplicationWindow {
                     text: "Send"
                     onClicked: {
                         // 发送按键逻辑
-                    }
-                }
-
-                Button {
-                    text: "File"
-                    onClicked: {
-                        // 处理文件按钮点击的逻辑
-                    }
-                }
-
-                Button {
-                    text: "Audio"
-                    onClicked: {
-                        // 处理音频按钮点击的逻辑
                     }
                 }
             }
@@ -369,6 +355,5 @@ ApplicationWindow {
                 IP: user.IP});
 
             }
-
 
 }
