@@ -197,6 +197,8 @@ ApplicationWindow {
             border.width: 2
             visible: false
             radius: 10
+
+            signal createRoom(string roomName, string password, string nick)
             Column {
                 anchors.centerIn: parent
                 spacing: 10
@@ -227,9 +229,10 @@ ApplicationWindow {
                         text: "Create Room"
                         onClicked: {
                             // 在此处处理创建房间的逻辑
-                            console.log("Room Name:", roomNameField.text)
-                            console.log("Password:", passwordField.text)
-                            console.log("Nickname:", nicknameField.text)
+                            popup.createRoom(roomNameField.text, passwordField.text, nicknameField.text)
+                            // console.log("Room Name:", roomNameField.text)
+                            // console.log("Password:", passwordField.text)
+                            // console.log("Nickname:", nicknameField.text)
                             popup.visible = false
                         }
                     }
@@ -251,6 +254,8 @@ ApplicationWindow {
             border.width: 2
             visible: false
             radius: 10
+
+            signal joinRoom(string roomName, string password, string nick)
             Column {
                 anchors.centerIn: parent
                 spacing: 10
@@ -280,9 +285,10 @@ ApplicationWindow {
                         text: "Join Room"
                         onClicked: {
                             // 在此处处理创建房间的逻辑
-                            console.log("Room Name:", roomNameField1.text)
-                            console.log("Password:", passwordField1.text)
-                            console.log("Nickname:", nicknameField1.text)
+                            popup1.joinRoom(roomNameField1.text, passwordField1.text, nicknameField1.text)
+                            //console.log("Room Name:", roomNameField1.text)
+                            //console.log("Password:", passwordField1.text)
+                            //console.log("Nickname:", nicknameField1.text)
                             popup1.visible = false
                         }
                     }
@@ -309,4 +315,3 @@ ApplicationWindow {
         }
 
 }
-
