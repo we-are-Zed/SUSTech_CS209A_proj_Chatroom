@@ -4,7 +4,9 @@
 
 要部署和运行 `ln-chat-server` 软件，可以使用以下 Docker 命令：
 
-`docker run -d -p ${YOUR_EXPOSE_PORT}:11451 lambillda/ln-chat-server`
+```sh
+docker run -d -p ${YOUR_EXPOSE_PORT}:11451 lambillda/ln-chat-server
+```
 
 在这个命令中，将 `${YOUR_EXPOSE_PORT}` 替换为你希望映射到宿主机上的端口号。容器内部的 `11451` 端口将映射到宿主机的 `${YOUR_EXPOSE_PORT}` 端口，允许你从宿主机访问运行在容器中的服务。
 
@@ -16,7 +18,8 @@
 
 在 Kubernetes 中部署 `ln-chat-server` 可以更好地管理和扩展应用。下面是一个示例 YAML 文件，用于在 Kubernetes 集群中部署 `ln-chat-server`：
 
-`apiVersion: apps/v1
+```yaml
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ln-chat-server-deployment
@@ -47,7 +50,8 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 11451
-  type: LoadBalancer`
+  type: LoadBalancer
+```
 
 这个 YAML 文件定义了一个 Deployment 和一个 Service。Deployment 部署了 `ln-chat-server` 应用，并创建了三个副本来确保高可用性。每个副本将监听 `11451` 端口。Service 定义了一个负载均衡器，将外部请求路由到这些副本。
 
